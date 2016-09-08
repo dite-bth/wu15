@@ -9,8 +9,8 @@
 		} 
 		else {
 
-			$sql = "INSERT INTO  players (firstname, lastname, nickname, id, email, score)
-			VALUES ('" . $_POST['first_name'] . "', '" . $_POST["last_name"] . "', '" . $_POST["nickname"] . "', '" . $_POST["id"] . "', '" . $_POST["email"] . "', '" . $_POST["score"] . "')";
+			$sql = "INSERT INTO  players (firstname, lastname, nickname, id, email, score) VALUES ('" . $_POST['first_name'] . "', '" . $_POST['last_name'] .
+                "', '" . $_POST['nickname'] . "', '" . $_POST['id'] . "', '" . $_POST['email'] . "', '" . $_POST['score'] . "')";
 
 			if ($conn->query($sql) === TRUE) {
 				echo "Användaren skapad!";
