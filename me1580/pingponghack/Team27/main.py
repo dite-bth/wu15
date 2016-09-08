@@ -9,7 +9,7 @@ def index():
 
 @app.route("/registrering_pingponghack")
 def registrering_pingponghack():
-    return render_templates("registrering_pingponghack.html")
+    return render_templates("templates/registrering_pingponghack.html")
     
 if __name__=="__main__":                                                 #ser till att servern startar när __name__ anropas.
     app.run (host='193.11.186.238', debug=True)                     #gör den public
