@@ -1,6 +1,10 @@
 from gpiozero import Button
 import json
 import simplejson as json
+import pygame
+import time
+
+
 
 redset = 0
 blueset = 0
@@ -11,11 +15,16 @@ redpoints = 0
 bluepoints = 0
 Buttonred = Button(19)
 Buttonblue = Button(21)
+player1 = ""
+player2 = ""
+matchrunning = False
 
 
-
-
-
+def startmatch(name1, name2):
+    global player1, player2, matchrunning
+    player1 = name1
+    player2 = name2
+    matchrunning = True
 
 
 
@@ -28,40 +37,48 @@ def pointred():
     global win
     global redset
     global blueset
-    
+
+
+    if matchrunning == False:
+        return
+
     redpoints = redpoints + 1
     
     if (redpoints >= 11) and (redpoints - bluepoints >= 2) and (winner == False):
         if (redset < 1):
             redset += 1
-            print("Red has won a set!")
-            info = [{'Redpoints': redpoints,
-                    'Bluepoints' : bluepoints,
-                    'Winner' : "red",
-                    'Redset' : redset,
-                    'Blueset' : blueset
-                    }]
-            with open('info.txt', 'w') as outfile:
-                json.dump(info,outfile)
             bluepoints = 0
             redpoints = 0
+            print("Red has won a set!")
+
             print("New set!")
             
         else :
             print("You have won the match, player red!")
+
+            pygame.init()
+            pygame.mixer.init()
+            sounda= pygame.mixer.Sound("klappklapp.wav")
+            sounda.play()
+            pygame.mixer.quit()
+
+            
             redset = 2
+            
             info = [{'Redpoints': redpoints,
-                    'Bluepoints' : bluepoints,
-                    'Winner' : "red",
-                    'Redset' : redset,
-                    'Blueset' : blueset
-                    }]
+                 'Bluepoints' : bluepoints,
+                 'Winner' : "red",
+                 'Redset' : redset,
+                 'Blueset' : blueset
+                }]
             with open('info.txt', 'w') as outfile:
                 json.dump(info,outfile)
 
+            time.sleep (4)
             winner = True
 
     elif (winner == True) and (restart == False):
+        redpoints -= 1
         print("Press a button again to restart.")
 
         restart = True
@@ -74,16 +91,19 @@ def pointred():
         restart = False
         redset = 0
         blueset = 0
-            
     else:
         print("Player red has " + str(redpoints) + " points!")
-        info = [{'Redpoints': redpoints,
-                'Bluepoints' : bluepoints
-                }]
-        with open('info.txt', 'w') as outfile:
-            json.dump(info,outfile)
-
-
+        
+    info = [{'Redpoints': redpoints,
+             'Bluepoints' : bluepoints,
+             'Winner' : "red",
+             'Redset' : redset,
+             'Blueset' : blueset,
+             'redplayer' : player1,
+             'blueplayer' : player2
+            }]
+    with open('info.txt', 'w') as outfile:
+        json.dump(info,outfile)
 
 
 
@@ -102,39 +122,36 @@ def pointblue():
     global redset
     global blueset
 
+
+    if matchrunning == False:
+        return
+
     bluepoints = bluepoints + 1
     
     if (bluepoints >= 11) and (bluepoints - redpoints >= 2) and (winner == False):
         if (blueset < 1):
                 blueset += 1
-                print("Blue has won a set!")
-                info = [{'Redpoints': redpoints,
-                        'Bluepoints' : bluepoints,
-                        'Winner' : "red",
-                        'Redset' : redset,
-                        'Blueset' : blueset
-                        }]
-                with open('info.txt', 'w') as outfile:
-                    json.dump(info,outfile)
                 bluepoints = 0
                 redpoints = 0
+                print("Blue has won a set!")
                 print("New set!")
 
         else:
             print("You have won the match, player blue!")
-            blueset = 2
-            info = [{'Redpoints': redpoints,
-                    'Bluepoints' : bluepoints,
-                    'Winner' : "blue",
-                    'Redset' : redset,
-                    'Blueset' : blueset
-                    }]
-            with open('info.txt', 'w') as outfile:
-                json.dump(info,outfile)
 
+            pygame.init()
+            pygame.mixer.init()
+            sounda= pygame.mixer.Sound("klappklapp.wav")
+            sounda.play()
+            time.sleep (4)
+            pygame.mixer.quit()
+            
+            blueset = 2
+            
             winner = True
 
     elif (winner == True) and (restart == False):
+        bluepoints -= 1
         print("Press a button again to restart.")
 
         restart = True
@@ -150,12 +167,20 @@ def pointblue():
 
     else:
         print("Player blue has " + str(bluepoints) + " points!")
-        info = [{'Redpoints': redpoints,
-                'Bluepoints' : bluepoints
-                }]
-        with open('info.txt', 'w') as outfile:
-            json.dump(info,outfile)
 
+    info = [{'Redpoints': redpoints,
+             'Bluepoints' : bluepoints,
+             'Winner' : "red",
+             'Redset' : redset,
+             'Blueset' : blueset,
+             'redplayer' : player1,
+             'blueplayer' : player2
+            }]
+    with open('info.txt', 'w') as outfile:
+        json.dump(info,outfile)
 
+        
 Buttonred.when_pressed = pointred 
 Buttonblue.when_pressed = pointblue
+
+
