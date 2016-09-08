@@ -1,10 +1,15 @@
-from flask import flask
+# coding=utf-8
+from flask import Flask
 
 app = Flask(__name__)
 
-@app.route("/")                         #Visar att detta är rootsidan.
+@app.route("/")                                                         #Visar att detta är rootsidan.
 def index():
-    return "?"                          #Här kan man lägga in url för att skicka till annan sida.
+    return "?"                                                          #Här kan man lägga in url för att skicka till annan sida.
 
-if __name__="__main__":                 #ser till att servern startar när __name__ anropas.
-    app.run(debug=True)
+@app.route("/registrering_pingponghack")
+def registrering_pingponghack():
+    return render_templates("registrering_pingponghack.html")
+    
+if __name__="__main__":                                                 #ser till att servern startar när __name__ anropas.
+    app.run (host='0.0.0.0', port 5000, debug=True)                     #gör den public
