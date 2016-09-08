@@ -11,5 +11,5 @@ def index():
 def registrering_pingponghack():
     return render_templates("registrering_pingponghack.html")
     
-if __name__="__main__":                                                 #ser till att servern startar när __name__ anropas.
+if __name__=="__main__":                                                 #ser till att servern startar när __name__ anropas.
     app.run (host='0.0.0.0', port 5000, debug=True)                     #gör den public
