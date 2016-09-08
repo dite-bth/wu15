@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")                                                         #Visar att detta är rootsidan.
 def index():
-    return "<h1> Välkommen till pingpong bamwamrang </h1>"                                                          #Här kan man lägga in url för att skicka till annan sida.
+    return render_template("start.html")                                                         #Här kan man lägga in url för att skicka till annan sida.
 
 @app.route("/registrering_pingponghack")
 def registrering_pingponghack():
