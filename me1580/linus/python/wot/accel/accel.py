@@ -8,7 +8,7 @@
 from smbus import SMBus
 busNum = 1
 b = SMBus(busNum)
-LSM = 0x1f
+LSM = 0x1d
 LSM_WHOAMI = 0b1001001 #Device self-id
 def twos_comp_combine(msb, lsb):
     twos_comp = 256*msb + lsb
