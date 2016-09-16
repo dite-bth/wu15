@@ -63,7 +63,7 @@ if b.read_byte_data(LSM, 0x0f) == LSM_WHOAMI:
         accy = twos_comp_combine(b.read_byte_data(LSM, ACC_Y_MSB), b.read_byte_data(LSM, ACC_Y_LSB))
         accz = twos_comp_combine(b.read_byte_data(LSM, ACC_Z_MSB), b.read_byte_data(LSM, ACC_Z_LSB))
         print "Acceleration (x, y, z):", accx, accy, accz
-        time.sleep(500)
+        time.sleep(1)
         x += 1
 else:
     print 'No LSM303D detected on bus '+str(busNum)+'.'
