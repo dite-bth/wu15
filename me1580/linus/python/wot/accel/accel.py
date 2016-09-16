@@ -46,14 +46,14 @@ TEMP_MSB = 0x05
 TEMP_LSB = 0x06
 if b.read_byte_data(LSM, 0x0f) == LSM_WHOAMI:
     print 'LSM303D detected successfully.'
+    b.write_byte_data(LSM, CTRL_1, 0b1010111)  # enable accelerometer, 50 hz sampling
+    b.write_byte_data(LSM, CTRL_2, 0x00)  #set +/- 2g full scale
+    b.write_byte_data(LSM, CTRL_5, 0b01100100)  #high resolution mode, thermometer off, 6.25hz ODR
+    b.write_byte_data(LSM, CTRL_6, 0b00100000)  # set +/- 4 gauss full scale
+    b.write_byte_data(LSM, CTRL_7, 0x00)  #get magnetometer out of low power mode
+
     x = 0
     while x <= 10:
-        b.write_byte_data(LSM, CTRL_1, 0b1010111)  # enable accelerometer, 50 hz sampling
-        b.write_byte_data(LSM, CTRL_2, 0x00)  #set +/- 2g full scale
-        b.write_byte_data(LSM, CTRL_5, 0b01100100)  #high resolution mode, thermometer off, 6.25hz ODR
-        b.write_byte_data(LSM, CTRL_6, 0b00100000)  # set +/- 4 gauss full scale
-        b.write_byte_data(LSM, CTRL_7, 0x00)  #get magnetometer out of low power mode
-
         magx = twos_comp_combine(b.read_byte_data(LSM, MAG_X_MSB), b.read_byte_data(LSM, MAG_X_LSB))
         magy = twos_comp_combine(b.read_byte_data(LSM, MAG_Y_MSB), b.read_byte_data(LSM, MAG_Y_LSB))
         magz = twos_comp_combine(b.read_byte_data(LSM, MAG_Z_MSB), b.read_byte_data(LSM, MAG_Z_LSB))
