@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Twitto Botto</title>
+    <meta name="description" content="Twitto Botto">
+    <meta name="author" content="LinusdP">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Twitto Botto</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input name="tweet_search" type="text" class="form-control" placeholder="Search tweet">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Log in</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+    <h2>Tweets about {{ search_word }}</h2>
+    {% for tweet in tweets %}
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" src="{{ tweet["user"]["profile_image_url"] }}" alt="{{ tweet["user"]["name"] }}'s pic">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{ tweet["user"]["name"] }}</h4>
+            <p>{{ tweet["text"] }}</p>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+    <hr>
+    <h2>Complete data</h2>
+    <ul>
+    {% for tweet in tweets %}
+        <li>{{ tweet }}</li>
+    {% endfor %}
+    </ul>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
